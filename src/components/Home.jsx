@@ -1,21 +1,8 @@
 import { useState } from 'react'
 import { getTodaySuggestion, getRandomSuggestion } from '../data/suggestions'
+import { doneMessages, seenMessages, helperCopies, pickRandom } from '../data/messages'
 import { useStorage } from '../hooks/useStorage'
 import DuckChar from './DuckChar'
-
-const closingMessages = [
-  { main: 'よかった。',         sub: 'それだけで今日は十分。' },
-  { main: 'ゆっくり閉じて。',   sub: '次に開くのは明日でいい。' },
-  { main: '小さくて、いい。',   sub: 'スマホを置いてみよう。' },
-  { main: '受け取った。',       sub: 'あとはスマホなしで過ごそう。' },
-  { main: 'やれた。',           sub: '閉じて、休んで。' },
-  { main: 'ちゃんとやってる。', sub: '今日もお疲れさま。' },
-  { main: 'いいね。',           sub: 'もうスクロールしなくていい。' },
-]
-
-function pickClosingMessage() {
-  return closingMessages[Math.floor(Math.random() * closingMessages.length)]
-}
 
 export default function Home({ onNavigateHistory }) {
   const { saveRecord, getTodayRecord } = useStorage()
@@ -25,7 +12,8 @@ export default function Home({ onNavigateHistory }) {
   const [done, setDone] = useState(todayRecord)
   const [justSaved, setJustSaved] = useState(false)
   const [memo, setMemo] = useState('')
-  const [closing] = useState(pickClosingMessage)
+  const [resultMsg] = useState(() => ({ done: pickRandom(doneMessages), seen: pickRandom(seenMessages) }))
+  const [helperMsg] = useState(() => pickRandom(helperCopies))
 
   function handleAction(action) {
     saveRecord({
@@ -45,14 +33,14 @@ export default function Home({ onNavigateHistory }) {
 
   // 完了直後
   if (done && justSaved) {
+    const msg = done.action === 'done' ? resultMsg.done : resultMsg.seen
     return (
       <div className="screen home home--result">
         <div className="result-card">
           <DuckChar size={72} className="result-duck" />
-          <p className="result-main">{closing.main}</p>
-          <p className="result-sub">{closing.sub}</p>
+          <p className="result-main">{msg}</p>
           {done.action === 'done' && (
-            <p className="result-close-hint">スマホを閉じていいよ。</p>
+            <p className="result-sub">スマホを閉じていいよ。</p>
           )}
         </div>
         <button className="btn btn--ghost history-link" onClick={onNavigateHistory}>
@@ -115,6 +103,8 @@ export default function Home({ onNavigateHistory }) {
           別の1ミリにする
         </button>
       </div>
+
+      <p className="helper-copy">{helperMsg}</p>
     </div>
   )
 }

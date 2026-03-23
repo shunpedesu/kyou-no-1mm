@@ -283,6 +283,16 @@ body {
   margin-bottom: calc(var(--safe-bottom) + 24px);
 }
 
+/* ── Helper Copy ── */
+.helper-copy {
+  text-align: center;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-top: 16px;
+  letter-spacing: 0.02em;
+  padding: 0 8px;
+}
+
 /* ── Buttons ── */
 .btn {
   width: 100%;
