@@ -2,7 +2,11 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 
+// GitHub Pages では /kyou-no-1mm/ 、Vercel/Netlify では /
+const base = process.env.VITE_BASE_URL || '/'
+
 export default defineConfig({
+  base,
   plugins: [
     react(),
     VitePWA({
