@@ -3,6 +3,8 @@ import { useStorage } from './hooks/useStorage'
 import Onboarding from './components/Onboarding'
 import Home from './components/Home'
 import History from './components/History'
+import About from './components/About'
+import Footer from './components/Footer'
 
 export default function App() {
   const { isOnboarded, setOnboarded } = useStorage()
@@ -17,9 +19,25 @@ export default function App() {
     return <Onboarding onFinish={handleOnboardingFinish} />
   }
 
-  if (screen === 'history') {
-    return <History onBack={() => setScreen('home')} />
+  if (screen === 'about') {
+    return <About onBack={() => setScreen('home')} />
   }
 
-  return <Home onNavigateHistory={() => setScreen('history')} />
+  const footer = <Footer onAbout={() => setScreen('about')} />
+
+  if (screen === 'history') {
+    return (
+      <>
+        <History onBack={() => setScreen('home')} />
+        {footer}
+      </>
+    )
+  }
+
+  return (
+    <>
+      <Home onNavigateHistory={() => setScreen('history')} />
+      {footer}
+    </>
+  )
 }
