@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/kyou-no-1mm/sw.js', { scope: '/kyou-no-1mm/' })})}
