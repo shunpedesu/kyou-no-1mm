@@ -13,7 +13,7 @@ export default function DuckChar({ size = 80, className = '' }) {
       height={size}
       className={className}
       aria-hidden="true"
-      style={{ objectFit: 'contain', mixBlendMode: 'multiply' }}
+      style={{ objectFit: 'contain' }}
     />
   )
 }
