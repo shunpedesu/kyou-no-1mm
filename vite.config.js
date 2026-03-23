@@ -21,9 +21,9 @@ export default defineConfig({
         background_color: '#f5f0eb',
         display: 'standalone',
         orientation: 'portrait',
-        start_url: '/',
-        scope: '/',
-        id: '/',
+        start_url: base,
+        scope: base,
+        id: base,
         icons: [
           {
             src: 'icons/icon-192.png',
@@ -48,7 +48,7 @@ export default defineConfig({
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
         // SPA: オフライン時もindex.htmlを返す
-        navigateFallback: '/index.html',
+        navigateFallback: `${base}index.html`,
         navigateFallbackDenylist: [/^\/api/],
         // キャッシュ戦略: アプリシェルは即キャッシュ
         runtimeCaching: [
